@@ -1,4 +1,5 @@
 /* eslint-disable n/no-process-env */
+import { vercel } from "@t3-oss/env-core/presets";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
@@ -14,6 +15,7 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    PORT: z.string().default("3000"),
   },
 
   /**
@@ -26,6 +28,7 @@ export const env = createEnv({
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string(),
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string(),
   },
+  extends: [vercel()],
 
   /**
    * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
@@ -40,6 +43,7 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
+    PORT: process.env.PORT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
